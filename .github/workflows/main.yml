@@ -16,12 +16,28 @@ jobs:
     runs-on: ubuntu-latest
     steps:   
       - uses: actions/checkout@v4
-      - name: Build
+
+      - name: Set Up Environment
         run: |
           sudo apt update
           sudo apt install -y libxrandr-dev libxxf86vm-dev libxcb-*-dev libx11-xcb-dev libxfixes-dev libdrm-dev libx11-dev
           pip3 install mako meson ninja
-          export ANDROID_NDK_HOME="$ANDROID_SDK_ROOT/ndk-bundle"
+
+      - name: Set ndkver,sdkver and work_dir
+        run: |
+          echo "NDK_VER=android-ndk-r27c" >> $GITHUB_ENV
+          echo "SDK_VER=33" >> $GITHUB_ENV
+          echo "WORK_DIR=$(pwd)" >> $GITHUB_ENV
+
+      - name: Download and extract NDK
+        run: |
+          echo "Downloading android-ndk from google server ..."
+          curl https://dl.google.com/android/repository/${NDK_VER}-linux.zip --output ${NDK_VER}-linux.zip &> /dev/null
+          echo "Extracting android-ndk to a folder ..."
+          unzip ${NDK_VER}-linux.zip &> /dev/null
+
+      - name: Build
+        run: |
           envsubst <android-drm-${{matrix.arch}} >build-crossfile-drm
           git clone https://gitlab.freedesktop.org/mesa/drm.git
           cd drm
