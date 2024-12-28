@@ -797,11 +797,11 @@ a7xx_gen2 = A7XXProps(
         has_event_write_sample_count = True,
         ubwc_unorm_snorm_int_compatible = True,
         supports_ibo_ubwc = True,
-        fs_must_have_non_zero_constlen_quirk = True,
+        # fs_must_have_non_zero_constlen_quirk = True,
         # Most devices with a740 have blob v6xx which doesn't have
         # this hint set. Match them for better compatibility by default.
-        enable_tp_ubwc_flag_hint = False,
-        has_64b_ssbo_atomics = True,
+        # enable_tp_ubwc_flag_hint = False,
+        # has_64b_ssbo_atomics = True,
     )
 
 a7xx_725 = A7XXProps(
@@ -936,7 +936,7 @@ add_gpus([
         GPUId(chip_id=0x43030B00, name="FD735")
     ], A6xxGPUInfo(
         CHIP.A7XX,
-        [a7xx_base, a7xx_gen2, A7XXProps(enable_tp_ubwc_flag_hint = True)],
+        [a7xx_base, a7xx_gen2],
         num_ccu = 3,
         tile_align_w = 96,
         tile_align_h = 32,
