@@ -71,7 +71,6 @@ jobs:
             -Dfreedreno-kmds=kgsl \
             -Dandroid-strict=false \
             -Db_lto=true \
-            -Dstrip=true \
             -Degl=disabled
           ninja -C "build-android" install
           mkdir /tmp/mesa/turnip
